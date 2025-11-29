@@ -1,0 +1,5 @@
+package br.com.pokedex.model.Pokemon
+
+enum class TipoPokemon {
+    NORMAL, PLANTA, FOGO, AGUA, VOADOR, GELO, PEDRA, TERRESTRE, ACO, LUTADOR, SOMBRIO, PSIQUICO, VENENOSO, INSETO, FADA, FANTASMA, DRAGAO
+}
