@@ -1,4 +1,4 @@
-package br.com.pokedex.model.Pokemon
+package br.com.pokedex.model
 
 enum class Habilidade {
     ELETRICO, FOGO, VENENOS, PEDRA, ACO, GELO, PLANTA, AGUA
