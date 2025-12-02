@@ -11,6 +11,7 @@ import br.com.pokedex.model.Habilidade
 import br.com.pokedex.model.Pokemon
 import br.com.pokedex.model.TipoPokemon
 
+// Activity que popula essa lista (mock)
 class ListarActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +22,7 @@ class ListarActivity : AppCompatActivity() {
         supportActionBar?.title = "Todos os Pokémons"
         supportActionBar?.setDisplayHomeAsUpEnabled(true) // Botão Voltar
 
-        // 1. Configurar o RecyclerView
+        // 1. Configurar o RecyclerView (activity_listar.xml)
         val rvPokemons = findViewById<RecyclerView>(R.id.rvPokemons)
         rvPokemons.layoutManager = LinearLayoutManager(this) // Lista Vertical padrão
 
@@ -30,8 +31,11 @@ class ListarActivity : AppCompatActivity() {
 
         // 3. Conectar o Adapter
         val adapter = PokemonAdapter(listaMock) { pokemonClicado ->
-            // Ação ao clicar no item (Futuramente abrirá os detalhes)
-            Toast.makeText(this, "Clicou em: ${pokemonClicado.nome}", Toast.LENGTH_SHORT).show()
+            // Cria a intenção de ir para a tela de Detalhes
+            val intent = android.content.Intent(this, DetalhesActivity::class.java)
+            // "Pendura" o objeto Pokemon na intent para ele ir junto para a tela de detalhes
+            intent.putExtra("POKEMON_SELECIONADO", pokemonClicado)
+            startActivity(intent)
         }
 
         rvPokemons.adapter = adapter

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="#FFFFFF">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Detalhes do Pokémon"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="24dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nome:"
+        android:textStyle="bold"/>
+    <EditText
+        android:id="@+id/editDetNome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textCapWords"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cadastrado por:"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/txtDetUsuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="-"
+        android:textSize="16sp"
+        android:textColor="#666666"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tipo:"
+        android:textStyle="bold"/>
+    <Spinner
+        android:id="@+id/spinnerDetTipo"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="16dp"
+        android:background="#F0F0F0"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Habilidades:"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/txtDetHabilidades"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:background="#EEEEEE"
+        android:text="-"
+        android:layout_marginBottom="32dp"/>
+
+    <Button
+        android:id="@+id/btnSalvarAlteracoes"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="SALVAR ALTERAÇÕES"
+        android:backgroundTint="#4CAF50"
+        android:textColor="#FFFFFF"/>
+
+    <Button
+        android:id="@+id/btnExcluir"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="EXCLUIR POKÉMON"
+        android:backgroundTint="#F44336"
+        android:layout_marginTop="8dp"
+        android:textColor="#FFFFFF"/>
+
+</LinearLayout>

@@ -1,5 +1,5 @@
 package br.com.pokedex.model
-
+import java.io.Serializable
 import br.com.pokedex.model.TipoPokemon
 
 data class Pokemon(
@@ -7,4 +7,4 @@ data class Pokemon(
     var tipoPokemon: TipoPokemon,
     var habilidade: List<Habilidade>,
     var usuario: String
-)
+): Serializable

@@ -15,9 +15,21 @@
             android:name=".view.Cadastro"
             android:exported="false" />
         <activity
+            android:name=".view.PesquisaHabilidadeActivity"
+            android:exported="false"
+            android:parentActivityName=".view.DashboardActivity" />
+        <activity
             android:name=".view.ListarActivity"
             android:exported="false"
             android:parentActivityName=".view.DashboardActivity" />
+        <activity
+            android:name=".view.PesquisaTipoActivity"
+            android:exported="false"
+            android:parentActivityName=".view.DashboardActivity" />
+        <activity
+            android:name=".view.DetalhesActivity"
+            android:exported="false"
+            android:parentActivityName=".view.ListarActivity" />
         <activity
             android:name=".view.LoginActivity"
             android:theme="@style/Theme.Material3.DayNight.NoActionBar"

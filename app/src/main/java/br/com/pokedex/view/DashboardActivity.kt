@@ -55,11 +55,13 @@ class DashboardActivity : AppCompatActivity() {
                 true
             }
             R.id.menu_pesquisar_tipo -> {
-                Toast.makeText(this, "Ir para Pesquisa por Tipo", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, PesquisaTipoActivity::class.java)
+                startActivity(intent)
                 true
             }
             R.id.menu_pesquisar_habilidade -> {
-                Toast.makeText(this, "Ir para Pesquisa por Habilidade", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, PesquisaHabilidadeActivity::class.java)
+                startActivity(intent)
                 true
             }
             R.id.menu_sair -> {
