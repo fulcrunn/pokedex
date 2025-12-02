@@ -12,6 +12,7 @@ import com.google.android.material.textfield.TextInputEditText
 import android.widget.Button
 import android.widget.Toast
 import br.com.pokedex.model.Usuario
+import br.com.pokedex.Sessao
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,20 +34,39 @@ class LoginActivity : AppCompatActivity() {
             val usuarioDigitado = editUsuario.text.toString()
             val senhaDigitada = editSenha.text.toString()
 
-            // Validação simples: não pode ser vazio
             if (usuarioDigitado.isEmpty() || senhaDigitada.isEmpty()) {
                 Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show()
             } else {
-                // Chama nossa função que simula a API (MOCK)
-                if (validarLoginMock(usuarioDigitado, senhaDigitada)) {
-                    // SUCESSO: Vai para a Dashboard
-                    val intent = Intent(this, DashboardActivity::class.java)
-                    startActivity(intent)
-                    finish() // Fecha o login para não voltar com o botão "Voltar" do celular
-                } else {
-                    // ERRO: Mostra o AlertDialog exigido no trabalho
-                    mostrarErroLogin()
-                }
+                // --- CÓDIGO NOVO: Chamada Real à API ---
+                val userObj = Usuario(usuarioDigitado, senhaDigitada)
+
+                // Chama a rota /login definida no ApiService
+                br.com.pokedex.network.RetrofitClient.service.login(userObj).enqueue(object : retrofit2.Callback<Map<String, String>> {
+                    override fun onResponse(call: retrofit2.Call<Map<String, String>>, response: retrofit2.Response<Map<String, String>>) {
+                        if (response.isSuccessful) {
+                            // Login Sucesso (200 OK)
+                            val resposta = response.body()
+                            val nomeUsuario = resposta?.get("usuario") ?: usuarioDigitado
+
+                            // 1. Salva na Sessão Global
+                            Sessao.usuarioLogado = nomeUsuario
+
+                            Toast.makeText(applicationContext, "Bem-vindo, $nomeUsuario!", Toast.LENGTH_SHORT).show()
+
+                            // 2. Vai para Dashboard
+                            val intent = Intent(this@LoginActivity, DashboardActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        } else {
+                            // Erro (400, 401, etc) - Ex: Senha incorreta
+                            Toast.makeText(applicationContext, "Login ou Senha incorretos", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onFailure(call: retrofit2.Call<Map<String, String>>, t: Throwable) {
+                        Toast.makeText(applicationContext, "Erro de conexão: ${t.message}", Toast.LENGTH_SHORT).show()
+                    }
+                })
             }
         }
     } // end onCreate

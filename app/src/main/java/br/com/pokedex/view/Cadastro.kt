@@ -14,6 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import br.com.pokedex.model.Habilidade
 import br.com.pokedex.model.TipoPokemon
+import br.com.pokedex.Sessao
 
 class Cadastro : AppCompatActivity() {
 
@@ -82,20 +83,40 @@ class Cadastro : AppCompatActivity() {
 
         // --- Lógica do Botão "Cadastrar" ---
         btnSalvar.setOnClickListener {
-            val nome = editNome.text.toString() // nome do pokemon
+            val nome = editNome.text.toString()
             val tipo = spinnerTipo.selectedItem as TipoPokemon
-            // Validações básicas dos campos, inputtext nome e spinner tipo/habilidade
+
+            // Pega o usuário logado (ou "Anônimo" se der erro)
+            val usuarioAtual = Sessao.usuarioLogado ?: "Anônimo"
+
             if (nome.isEmpty()) {
                 editNome.error = "Nome é obrigatório"
-            } else if (tipo == null) {
-                Toast.makeText(this, "Selecione um tipo", Toast.LENGTH_SHORT).show()
             } else if (habilidadesSelecionadas.isEmpty()) {
                 Toast.makeText(this, "Selecione pelo menos 1 habilidade", Toast.LENGTH_SHORT).show()
             } else {
-                // SUCESSO (Por enquanto apenas Mock/Toast)
-                // Futuramente aqui enviaremos para a API
-                Toast.makeText(this, "Pokémon $nome cadastrado com sucesso!", Toast.LENGTH_LONG).show()
-                finish() // Volta para a Dashboard
+                // --- CÓDIGO NOVO: Monta o Objeto e Envia ---
+                val novoPokemon = br.com.pokedex.model.Pokemon(
+                    nome = nome,
+                    tipoPokemon = tipo,
+                    habilidade = habilidadesSelecionadas,
+                    usuario = usuarioAtual
+                )
+
+                br.com.pokedex.network.RetrofitClient.service.cadastrarPokemon(novoPokemon).enqueue(object : retrofit2.Callback<Map<String, String>> {
+                    override fun onResponse(call: retrofit2.Call<Map<String, String>>, response: retrofit2.Response<Map<String, String>>) {
+                        if (response.isSuccessful) {
+                            Toast.makeText(applicationContext, "Pokémon cadastrado com sucesso!", Toast.LENGTH_LONG).show()
+                            finish() // Volta para a Dashboard
+                        } else {
+                            // Ex: Erro 400 se o nome já existe
+                            Toast.makeText(applicationContext, "Erro: ${response.message()}", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onFailure(call: retrofit2.Call<Map<String, String>>, t: Throwable) {
+                        Toast.makeText(applicationContext, "Falha ao salvar: ${t.message}", Toast.LENGTH_SHORT).show()
+                    }
+                })
             }
         }
     }

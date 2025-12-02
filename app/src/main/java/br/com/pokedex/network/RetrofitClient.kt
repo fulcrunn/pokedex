@@ -4,7 +4,7 @@ package br.com.pokedex.network
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object RetrofitConfig {
+object RetrofitClient {
 
     // IMPORTANTE: Coloque o IP da sua VPS aqui (não use localhost, pois localhost é o celular!)
     // Mantenha o "http://" e a porta ":8000/"
