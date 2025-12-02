@@ -1,5 +1,6 @@
 package br.com.pokedex.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu        // Import Adicionado
 import android.view.MenuItem    // Import Adicionado
@@ -44,13 +45,13 @@ class DashboardActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_cadastrar -> {
-                // TODO: Criar e navegar para Activity de Cadastro
-                Toast.makeText(this, "Ir para Cadastro", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, Cadastro::class.java)
+                startActivity(intent)
                 true
             }
             R.id.menu_listar -> {
-                // TODO: Criar e navegar para Activity de Listagem
-                Toast.makeText(this, "Ir para Listagem", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, ListarActivity::class.java)
+                startActivity(intent)
                 true
             }
             R.id.menu_pesquisar_tipo -> {
